@@ -1,0 +1,55 @@
+/* Home.css */
+.home-container {
+  background-color: #6c6c6c; /* Fundo cinza claro */
+  min-height: 100vh;
+}
+
+.navbar {
+  background-color: #f5f5f5; /* Cor de fundo da barra de navegação */
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center; /* Centraliza os itens do menu */
+  flex-wrap: wrap; /* Permite quebra de linha se necessário */
+}
+
+.nav-link {
+  padding: 0.5rem 1rem; /* Ajuste o padding para links */
+}
+
+.hero-section {
+  background-color: #007bff;
+  color: white;
+  padding: 50px 0;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+}
+
+.features {
+  padding: 50px 0;
+}
+
+.feature-card {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-card i {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  padding: 20px 0;
+}

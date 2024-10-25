@@ -16,7 +16,7 @@ function Nav({ Toggle }) {
       >
         <i className="bi bi-justify"></i>
       </button>
-      <div className="collapse navbar-collapse" id="collapsibleNavId">
+      {/* <div className="collapse navbar-collapse" id="collapsibleNavId">
         <ul className="navbar-nav ms-auto mt-2 mt-lg-0">
           <li className="nav-item dropdown">
             <a
@@ -27,7 +27,7 @@ function Nav({ Toggle }) {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Admin
+              ACT
             </a>
             <div className="dropdown-menu" aria-labelledby="dropdownId">
               <a className="dropdown-item" href="#">
@@ -42,7 +42,7 @@ function Nav({ Toggle }) {
             </div>
           </li>
         </ul>
-      </div>
+      </div> */}
     </nav>
   );
 }
