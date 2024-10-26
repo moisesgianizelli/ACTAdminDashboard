@@ -13,7 +13,6 @@ function RecentTransactions() {
           <span className="badge bg-success fs-6">Completed</span>
         </div>
       </div>
-      {/* Adicione mais registros conforme necessário */}
     </div>
   );
 }

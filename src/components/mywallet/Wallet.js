@@ -18,7 +18,6 @@ function Wallet({ Toggle }) {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSearch = () => {
-    // Simulação de busca de usuário
     setSelectedUser({
       name: "John Doe",
       portfolio: sampleData,
@@ -38,14 +37,10 @@ function Wallet({ Toggle }) {
         />
         <button onClick={handleSearch}>Search</button>
       </div>
-
-      {/* Seção do Dashboard */}
       {selectedUser && (
         <div className="dashboard">
           <h2>Dashboard - {selectedUser.name}</h2>
           <p>Total Invested: ${selectedUser.totalInvested}</p>
-
-          {/* Gráfico de Pizza */}
           <div className="chart-container">
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>

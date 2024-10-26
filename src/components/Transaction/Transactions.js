@@ -12,14 +12,12 @@ function Transactions({ Toggle }) {
         <h2 className="mt-4">Transactions</h2>
         <hr />
 
-        {/* Renderiza o componente Stocks */}
         <h3>Stocks</h3>
         <div className="row g-3">
           <Stocks />
         </div>
         <hr />
 
-        {/* Renderiza o componente Recent Transactions */}
         <h3>Recent Transactions</h3>
         <div className="row g-3">
           <RecentTransactions />

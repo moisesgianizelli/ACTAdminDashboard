@@ -17,11 +17,9 @@ function Stocks() {
   return (
     <div className="row g-3">
       {" "}
-      {/* Adicione a classe g-3 para espaçamento entre os cards */}
       {stockData.map((stock) => (
         <div className="col-6 col-md-4" key={stock.id}>
           {" "}
-          {/* Responsividade dos cards */}
           <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
             <div>
               <h3 className="fs-2">{stock.value}</h3>

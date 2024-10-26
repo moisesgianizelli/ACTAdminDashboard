@@ -29,7 +29,6 @@ function NotificationsList() {
   return (
     <div className="px-3">
       <Nav Toggle={() => {}} />{" "}
-      {/* Passe uma função vazia se não precisar do Toggle aqui */}
       <div className="container-fluid">
         <h2 className="mt-4">Notifications</h2>
         <div className="row g-3 my-2">
@@ -41,7 +40,6 @@ function NotificationsList() {
                   <p className="fs-6">Date: {notification.date}</p>
                 </div>
                 <span className="badge bg-info fs-6">New</span>{" "}
-                {/* Badge para marcar a notificação como nova */}
               </div>
             </div>
           ))}

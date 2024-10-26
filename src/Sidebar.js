@@ -132,7 +132,7 @@ function Sidebar({ onSelect, activeItem: propActiveItem }) {
           <span>Settings</span>
         </Link>
         <Link
-          to="/logout" // Você pode substituir por uma rota real ou uma função de logout
+          to="/logout"
           onClick={() => handleSelect("Logout")}
           className={`list-group-item py-2 ${
             activeItem === "Logout" ? "active" : ""

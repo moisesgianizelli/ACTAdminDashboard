@@ -25,7 +25,6 @@ function AI({ Toggle }) {
             stocks or more traditional options?
           </p>
         </div>
-        {/* Adicione mais mensagens conforme necessário */}
       </div>
       <div className="chat-input">
         <input

@@ -6,13 +6,11 @@ function Login({ handleLogin }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // Credenciais fixas para teste
   const correctUsername = "admin";
   const correctPassword = "admin123";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Verifica se o usuário e a senha são os corretos
     if (username === correctUsername && password === correctPassword) {
       handleLogin();
     } else {

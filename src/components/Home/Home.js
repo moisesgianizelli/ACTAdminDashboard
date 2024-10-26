@@ -8,9 +8,6 @@ const Home = ({ Toggle }) => {
     <div className="home-container">
       <Nav Toggle={Toggle} />
       <nav className="navbar navbar-expand-lg navbar-light bg-light text-center">
-        {/* <a className="navbar-brand mx-auto" href="#">
-          MyInvestmentApp
-        </a> */}
         <button
           className="navbar-toggler"
           type="button"
