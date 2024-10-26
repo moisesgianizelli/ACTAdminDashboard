@@ -1,0 +1,21 @@
+/* Sidebar.css */
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-item {
+  padding: 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.sidebar-item:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar-item.active {
+  background-color: #007bff; /* Cor de fundo para o item ativo */
+  color: white; /* Cor do texto do item ativo */
+  font-weight: bold;
+}

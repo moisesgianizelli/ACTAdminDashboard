@@ -57,7 +57,7 @@ const Home = ({ Toggle }) => {
       </nav>
 
       <header className="hero-section text-center">
-        <h1>Welcome to MyInvestmentApp</h1>
+        <h1>Welcome to ACT App</h1>
         <p>Your one-stop solution for managing investments.</p>
         <a href="#" className="btn btn-primary btn-lg">
           Get Started
