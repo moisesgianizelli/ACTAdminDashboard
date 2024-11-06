@@ -37,39 +37,41 @@ const FAQ = ({ Toggle }) => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="px-3">
       <Nav Toggle={Toggle} />
-      <h2 className="text-center mb-4">Frequently Asked Questions</h2>
-      <div className="accordion" id="faqAccordion">
-        {faqs.map((faq, index) => (
-          <div className="card" key={index}>
-            <div className="card-header" id={`heading${index}`}>
-              <h5 className="mb-0">
-                <button
-                  className={`btn btn-link ${
-                    openIndex === index ? "" : "collapsed"
-                  }`}
-                  type="button"
-                  onClick={() => toggleFAQ(index)}
-                  data-toggle="collapse"
-                  data-target={`#collapse${index}`}
-                  aria-expanded={openIndex === index}
-                  aria-controls={`collapse${index}`}
-                >
-                  {faq.question}
-                </button>
-              </h5>
+      <div className="container-fluid">
+        <h2 className="text-center mt-4">Frequently Asked Questions</h2>
+        <hr />
+
+        <div className="accordion" id="faqAccordion">
+          {faqs.map((faq, index) => (
+            <div className="card mb-3" key={index}>
+              <div className="card-header" id={`heading${index}`}>
+                <h5 className="mb-0">
+                  <button
+                    className={`btn btn-link ${
+                      openIndex === index ? "" : "collapsed"
+                    }`}
+                    type="button"
+                    onClick={() => toggleFAQ(index)}
+                    aria-expanded={openIndex === index}
+                    aria-controls={`collapse${index}`}
+                  >
+                    {faq.question}
+                  </button>
+                </h5>
+              </div>
+              <div
+                id={`collapse${index}`}
+                className={`collapse ${openIndex === index ? "show" : ""}`}
+                aria-labelledby={`heading${index}`}
+                data-parent="#faqAccordion"
+              >
+                <div className="card-body">{faq.answer}</div>
+              </div>
             </div>
-            <div
-              id={`collapse${index}`}
-              className={`collapse ${openIndex === index ? "show" : ""}`}
-              aria-labelledby={`heading${index}`}
-              data-parent="#faqAccordion"
-            >
-              <div className="card-body">{faq.answer}</div>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

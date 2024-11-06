@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from "../../Nav";
 
-function NotificationsList() {
+function NotificationsList({ Toggle }) {
   const notifications = [
     {
       id: 1,
@@ -28,7 +28,7 @@ function NotificationsList() {
 
   return (
     <div className="px-3">
-      <Nav Toggle={() => {}} />{" "}
+      <Nav Toggle={Toggle} />
       <div className="container-fluid">
         <h2 className="mt-4">Notifications</h2>
         <div className="row g-3 my-2">
