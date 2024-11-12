@@ -1,20 +1,25 @@
 import React, { useState } from "react";
-import "./Login.css"; // Certifique-se de ter o CSS para estilização
+import "./Login.css";
 
 function Login({ handleLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const correctUsername = "admin";
-  const correctPassword = "admin123";
+  const adminUsername = "admin";
+  const adminPassword = "admin123";
+  const userUsername = "user";
+  const userPassword = "user123";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === correctUsername && password === correctPassword) {
-      handleLogin();
+
+    if (username === adminUsername && password === adminPassword) {
+      handleLogin("manager");
+    } else if (username === userUsername && password === userPassword) {
+      handleLogin("user");
     } else {
-      setError("Usuário ou senha incorretos.");
+      setError("Incorrect password.");
     }
   };
 
@@ -24,7 +29,7 @@ function Login({ handleLogin }) {
         <h2>Login</h2>
         {error && <p className="error">{error}</p>}
         <div className="form-group">
-          <label>Usuário</label>
+          <label>User</label>
           <input
             type="text"
             value={username}
@@ -33,7 +38,7 @@ function Login({ handleLogin }) {
           />
         </div>
         <div className="form-group">
-          <label>Senha</label>
+          <label>Password</label>
           <input
             type="password"
             value={password}
@@ -42,7 +47,7 @@ function Login({ handleLogin }) {
           />
         </div>
         <button type="submit" className="login-button">
-          Entrar
+          Enter
         </button>
       </form>
     </div>

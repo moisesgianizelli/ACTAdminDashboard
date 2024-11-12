@@ -12,6 +12,7 @@ import Home from "./components/Home/Home";
 import Wallet from "./components/mywallet/Wallet";
 import Transactions from "./components/Transaction/Transactions";
 import Notifications from "./components/Notifications/Notifications";
+import UserWallet from "./components/UserWallet/UserWallet";
 import AI from "./components/AI/AI";
 import FAQ from "./components/FAQ/FAQ";
 import Settings from "./components/Settings/Settings";
@@ -19,23 +20,22 @@ import Login from "./components/Login/Login";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null);
   const [toggle, setToggle] = useState(true);
   const [selectedOption, setSelectedOption] = useState("Home");
 
-  const handleLogin = () => {
+  const handleLogin = (type) => {
     setIsLoggedIn(true);
+    setUserType(type);
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserType(null);
   };
 
   const Toggle = () => {
     setToggle(!toggle);
-  };
-
-  const onSelect = (option) => {
-    setSelectedOption(option);
   };
 
   return (
@@ -47,21 +47,46 @@ function App() {
               {toggle && (
                 <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
                   <Sidebar
-                    onSelect={onSelect}
+                    onSelect={setSelectedOption}
+                    activeItem={selectedOption}
                     Toggle={Toggle}
                     handleLogout={handleLogout}
+                    userType={userType}
                   />
                 </div>
               )}
-              {toggle && <div className="col-4 col-md-2"></div>}
-
-              <div className="col">
+              <div className={`col ${toggle ? "offset-md-2" : ""}`}>
                 <Routes>
                   <Route path="/" element={<Home Toggle={Toggle} />} />
-                  <Route path="/wallet" element={<Wallet Toggle={Toggle} />} />
+                  <Route
+                    path="/wallet"
+                    element={
+                      userType === "manager" ? (
+                        <Wallet Toggle={Toggle} />
+                      ) : (
+                        <Navigate to="/" />
+                      )
+                    }
+                  />
                   <Route
                     path="/transactions"
-                    element={<Transactions Toggle={Toggle} />}
+                    element={
+                      userType === "manager" ? (
+                        <Transactions Toggle={Toggle} />
+                      ) : (
+                        <Navigate to="/" />
+                      )
+                    }
+                  />
+                  <Route
+                    path="/user-wallet" // Nova rota para o UserWallet
+                    element={
+                      userType === "user" ? ( // Verifica se o tipo de usuário é "user"
+                        <UserWallet Toggle={Toggle} />
+                      ) : (
+                        <Navigate to="/" />
+                      )
+                    }
                   />
                   <Route
                     path="/notifications"
@@ -81,7 +106,7 @@ function App() {
             <Routes>
               <Route
                 path="/login"
-                element={<Login handleLogin={handleLogin} />}
+                element={<Login handleLogin={(type) => handleLogin(type)} />}
               />
               <Route path="*" element={<Navigate to="/login" />} />
             </Routes>
