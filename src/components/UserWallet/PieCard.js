@@ -14,9 +14,8 @@ function PieCard({ pie, onBuy, onSell, isBought, balance }) {
   return (
     <div className="p-3 bg-white shadow-sm d-flex justify-content-between align-items-center rounded my-2">
       <div>
-        <h5>{pie.name}</h5>
+        <h4>{pie.name}</h4>
         <p>{pie.description}</p>
-        <p>Objective: {pie.objective}</p>
         {isBought ? (
           <button className="btn btn-danger" onClick={() => onSell(pie)}>
             Sell

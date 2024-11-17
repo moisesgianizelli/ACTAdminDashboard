@@ -5,66 +5,94 @@ import PurchasedPiesList from "./PurchasedPiesList";
 
 function UserWallet({ Toggle }) {
   const [balance, setBalance] = useState(1000);
-  const [purchasedPies, setPurchasedPies] = useState([]);
+  const [purchasedStocks, setPurchasedStocks] = useState([]);
+  const [purchasedCrypto, setPurchasedCrypto] = useState([]);
 
-  const pies = [
+  const techStocks = [
+    { id: 1, name: "Apple", ticker: "AAPL", description: "Technology" },
+    { id: 2, name: "Microsoft", ticker: "MSFT", description: "Technology" },
+    { id: 3, name: "Google", ticker: "GOOGL", description: "Technology" },
+    { id: 4, name: "Amazon", ticker: "AMZN", description: "E-commerce" },
+    { id: 5, name: "Tesla", ticker: "TSLA", description: "Electric Vehicles" },
     {
-      id: 1,
-      name: "High Risk",
-      description: "Aggressive investment",
-      objective: "High Risk",
+      id: 6,
+      name: "NVIDIA",
+      ticker: "NVDA",
+      description: "Graphics Processing",
     },
-    {
-      id: 2,
-      name: "Diary Dividends",
-      description: "Diary dividends",
-      objective: "Passive Dividends",
-    },
-    {
-      id: 3,
-      name: "Trend Stocks",
-      description: "Hot Stocks",
-      objective: "Safe Investment",
-    },
-    {
-      id: 4,
-      name: "Specialist",
-      description: "Specialist",
-      objective: "Safe Investment",
-    },
-    {
-      id: 5,
-      name: "Bitcoin",
-      description: "Bitcoin",
-      objective: "Bitcoin",
-    },
+    { id: 7, name: "Meta", ticker: "META", description: "Social Media" },
+    { id: 8, name: "Adobe", ticker: "ADBE", description: "Creative Software" },
+    { id: 9, name: "Intel", ticker: "INTC", description: "Semiconductors" },
+    { id: 10, name: "Cisco", ticker: "CSCO", description: "Networking" },
   ];
 
-  const buyPie = (pie, amount) => {
+  const cryptoAssets = [
+    { id: 11, name: "Bitcoin", ticker: "BTC", description: "Cryptocurrency" },
+    { id: 12, name: "Ethereum", ticker: "ETH", description: "Cryptocurrency" },
+    { id: 13, name: "Ripple", ticker: "XRP", description: "Cryptocurrency" },
+  ];
+
+  const buyAsset = (asset, amount, type) => {
     if (balance >= amount) {
       setBalance(balance - amount);
 
-      const existingPie = purchasedPies.find((p) => p.id === pie.id);
+      if (type === "stock") {
+        if (purchasedStocks.length < 10) {
+          const existingStock = purchasedStocks.find((s) => s.id === asset.id);
 
-      if (existingPie) {
-        setPurchasedPies(
-          purchasedPies.map((p) =>
-            p.id === pie.id ? { ...p, invested: p.invested + amount } : p
-          )
-        );
-      } else {
-        setPurchasedPies([...purchasedPies, { ...pie, invested: amount }]);
+          if (existingStock) {
+            setPurchasedStocks(
+              purchasedStocks.map((s) =>
+                s.id === asset.id ? { ...s, invested: s.invested + amount } : s
+              )
+            );
+          } else {
+            setPurchasedStocks([
+              ...purchasedStocks,
+              { ...asset, invested: amount },
+            ]);
+          }
+        } else {
+          alert("You can only purchase up to 10 tech stocks.");
+        }
+      } else if (type === "crypto") {
+        if (purchasedCrypto.length < 3) {
+          const existingCrypto = purchasedCrypto.find((c) => c.id === asset.id);
+
+          if (existingCrypto) {
+            setPurchasedCrypto(
+              purchasedCrypto.map((c) =>
+                c.id === asset.id ? { ...c, invested: c.invested + amount } : c
+              )
+            );
+          } else {
+            setPurchasedCrypto([
+              ...purchasedCrypto,
+              { ...asset, invested: amount },
+            ]);
+          }
+        } else {
+          alert("You can only purchase up to 3 crypto assets.");
+        }
       }
     } else {
       alert("Insufficient balance for this purchase.");
     }
   };
 
-  const sellPie = (pie) => {
-    const pieToSell = purchasedPies.find((p) => p.id === pie.id);
-    if (pieToSell) {
-      setBalance(balance + pieToSell.invested);
-      setPurchasedPies(purchasedPies.filter((p) => p.id !== pie.id));
+  const sellAsset = (asset, type) => {
+    if (type === "stock") {
+      const stockToSell = purchasedStocks.find((s) => s.id === asset.id);
+      if (stockToSell) {
+        setBalance(balance + stockToSell.invested);
+        setPurchasedStocks(purchasedStocks.filter((s) => s.id !== asset.id));
+      }
+    } else if (type === "crypto") {
+      const cryptoToSell = purchasedCrypto.find((c) => c.id === asset.id);
+      if (cryptoToSell) {
+        setBalance(balance + cryptoToSell.invested);
+        setPurchasedCrypto(purchasedCrypto.filter((c) => c.id !== asset.id));
+      }
     }
   };
 
@@ -76,20 +104,20 @@ function UserWallet({ Toggle }) {
         <div className="row">
           <div className="col-12 mb-4">
             <div className="p-3 bg-white shadow-sm rounded">
-              <h4>Balance: ${balance}</h4>
+              <h4>Balance: €{balance}</h4>
             </div>
           </div>
           <div className="col-12">
-            <h4>Options:</h4>
+            <h4>Tech Stocks:</h4>
             <div className="row g-3">
-              {pies.map((pie) => (
-                <div key={pie.id} className="col-md-4">
+              {techStocks.map((stock) => (
+                <div key={stock.id} className="col-md-4">
                   <PieCard
-                    key={pie.id}
-                    pie={pie}
-                    onBuy={(amount) => buyPie(pie, amount)}
-                    onSell={() => sellPie(pie)}
-                    isBought={purchasedPies.some((p) => p.id === pie.id)}
+                    key={stock.id}
+                    pie={stock}
+                    onBuy={(amount) => buyAsset(stock, amount, "stock")}
+                    onSell={() => sellAsset(stock, "stock")}
+                    isBought={purchasedStocks.some((s) => s.id === stock.id)}
                     balance={balance}
                   />
                 </div>
@@ -97,7 +125,26 @@ function UserWallet({ Toggle }) {
             </div>
           </div>
           <div className="col-12 mt-4">
-            <PurchasedPiesList purchasedPies={purchasedPies} />
+            <h4>Crypto Assets:</h4>
+            <div className="row g-3">
+              {cryptoAssets.map((crypto) => (
+                <div key={crypto.id} className="col-md-4">
+                  <PieCard
+                    key={crypto.id}
+                    pie={crypto}
+                    onBuy={(amount) => buyAsset(crypto, amount, "crypto")}
+                    onSell={() => sellAsset(crypto, "crypto")}
+                    isBought={purchasedCrypto.some((c) => c.id === crypto.id)}
+                    balance={balance}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col-12 mt-4">
+            <PurchasedPiesList
+              purchasedPies={[...purchasedStocks, ...purchasedCrypto]}
+            />
           </div>
         </div>
       </div>
