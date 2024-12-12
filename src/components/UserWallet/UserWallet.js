@@ -1,30 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PieCard from "./PieCard";
 import Nav from "../../Nav";
 import PurchasedPiesList from "./PurchasedPiesList";
+import { getUserWallet, getPiesApi, buyPieApi } from "../../utils/api";
 
 function UserWallet({ Toggle }) {
-  const [balance, setBalance] = useState(1000);
+  const [balance, setBalance] = useState(0);
+  const [techStocks, setTechStocks] = useState([]);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [purchasedCrypto, setPurchasedCrypto] = useState([]);
 
-  const techStocks = [
-    { id: 1, name: "Apple", ticker: "AAPL", description: "Technology" },
-    { id: 2, name: "Microsoft", ticker: "MSFT", description: "Technology" },
-    { id: 3, name: "Google", ticker: "GOOGL", description: "Technology" },
-    { id: 4, name: "Amazon", ticker: "AMZN", description: "E-commerce" },
-    { id: 5, name: "Tesla", ticker: "TSLA", description: "Electric Vehicles" },
-    {
-      id: 6,
-      name: "NVIDIA",
-      ticker: "NVDA",
-      description: "Graphics Processing",
-    },
-    { id: 7, name: "Meta", ticker: "META", description: "Social Media" },
-    { id: 8, name: "Adobe", ticker: "ADBE", description: "Creative Software" },
-    { id: 9, name: "Intel", ticker: "INTC", description: "Semiconductors" },
-    { id: 10, name: "Cisco", ticker: "CSCO", description: "Networking" },
-  ];
+  const getBalance = async () => {
+    let returnData = await getUserWallet(
+      JSON.parse(localStorage.getItem("user"))["uid"]
+    );
+    setBalance(returnData.balance);
+  };
+
+  const getPies = async () => {
+    let returnData = await getPiesApi(
+      JSON.parse(localStorage.getItem("user"))["uid"]
+    );
+    setTechStocks(returnData.data);
+  };
+
+  const buyPie = async (pie_id, amount) => {
+    await buyPieApi({
+      pie_id: pie_id,
+      amount: amount,
+    });
+
+    getBalance();
+  };
+
+  useEffect(() => {
+    getBalance();
+    getPies();
+  }, []);
 
   const cryptoAssets = [
     { id: 11, name: "Bitcoin", ticker: "BTC", description: "Cryptocurrency" },
@@ -33,50 +45,55 @@ function UserWallet({ Toggle }) {
   ];
 
   const buyAsset = (asset, amount, type) => {
-    if (balance >= amount) {
-      setBalance(balance - amount);
-
-      if (type === "stock") {
-        if (purchasedStocks.length < 10) {
-          const existingStock = purchasedStocks.find((s) => s.id === asset.id);
-
-          if (existingStock) {
-            setPurchasedStocks(
-              purchasedStocks.map((s) =>
-                s.id === asset.id ? { ...s, invested: s.invested + amount } : s
-              )
-            );
-          } else {
-            setPurchasedStocks([
-              ...purchasedStocks,
-              { ...asset, invested: amount },
-            ]);
-          }
-        } else {
-          alert("You can only purchase up to 10 tech stocks.");
-        }
-      } else if (type === "crypto") {
-        if (purchasedCrypto.length < 3) {
-          const existingCrypto = purchasedCrypto.find((c) => c.id === asset.id);
-
-          if (existingCrypto) {
-            setPurchasedCrypto(
-              purchasedCrypto.map((c) =>
-                c.id === asset.id ? { ...c, invested: c.invested + amount } : c
-              )
-            );
-          } else {
-            setPurchasedCrypto([
-              ...purchasedCrypto,
-              { ...asset, invested: amount },
-            ]);
-          }
-        } else {
-          alert("You can only purchase up to 3 crypto assets.");
-        }
-      }
-    } else {
+    if (balance < amount) {
       alert("Insufficient balance for this purchase.");
+      return;
+    }
+
+    // setBalance(balance - amount);
+    if (type === "stock") {
+      buyPie(asset.id, amount);
+
+      // useEffect(() => {
+      //   buyPie(asset.id, amount);
+      // }, []);
+      // if (purchasedStocks.length < 10) {
+      //   const existingStock = purchasedStocks.find((s) => s.id === asset.id);
+
+      //   if (existingStock) {
+      //     setPurchasedStocks(
+      //       purchasedStocks.map((s) =>
+      //         s.id === asset.id ? { ...s, invested: s.invested + amount } : s
+      //       )
+      //     );
+      //   } else {
+      //     setPurchasedStocks([
+      //       ...purchasedStocks,
+      //       { ...asset, invested: amount },
+      //     ]);
+      //   }
+      // } else {
+      //   alert("You can only purchase up to 10 tech stocks.");
+      // }
+    } else if (type === "crypto") {
+      if (purchasedCrypto.length < 3) {
+        const existingCrypto = purchasedCrypto.find((c) => c.id === asset.id);
+
+        if (existingCrypto) {
+          setPurchasedCrypto(
+            purchasedCrypto.map((c) =>
+              c.id === asset.id ? { ...c, invested: c.invested + amount } : c
+            )
+          );
+        } else {
+          setPurchasedCrypto([
+            ...purchasedCrypto,
+            { ...asset, invested: amount },
+          ]);
+        }
+      } else {
+        alert("You can only purchase up to 3 crypto assets.");
+      }
     }
   };
 

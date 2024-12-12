@@ -1,86 +1,159 @@
-import React, { useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import "./MyWallet.css";
+import React, { useState, useEffect } from "react";
 import Nav from "../../Nav";
-
-const sampleData = [
-  { name: "Stock A", value: 400 },
-  { name: "Stock B", value: 300 },
-  { name: "Stock C", value: 300 },
-  { name: "Stock D", value: 200 },
-];
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+import "./MyWallet.css";
 
 function Wallet({ Toggle }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [selectedPortfolio, setSelectedPortfolio] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(null); // Estado para o card ativo
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSearch = () => {
-    if (searchQuery) {
-      setSelectedUser({
-        name: "John Doe",
-        portfolio: sampleData,
-        totalInvested: 1200,
-      });
-    } else {
-      alert("Please enter a search query.");
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        throw new Error("Token not found. Try again.");
+      }
+      const response = await fetch(
+        "http://127.0.0.1:5000/api/users/admin/all",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Users not found");
+      }
+      const data = await response.json();
+      setUsers(data.users || []);
+    } catch (err) {
+      setError(err.message);
+      if (err.message.includes("Token not found")) {
+        window.location.href = "/login";
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPortfolio = async (uid) => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        throw new Error("Token not found.");
+      }
+      const response = await fetch(
+        `http://127.0.0.1:5000/api/clients/${uid}/portfolio`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Error");
+      }
+      const data = await response.json();
+      setSelectedPortfolio(data.data || null);
+      setSelectedUserId(uid);
+    } catch (err) {
+      setError(err.message);
+      if (err.message.includes("Token not found")) {
+        window.location.href = "/login";
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="px-3">
+    <div className="wallet-container">
       <Nav Toggle={Toggle} />
-      <div className="container-fluid">
-        <h2 className="mt-4">Client's Wallet</h2>
-        <hr />
-
-        <div className="search-bar mb-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search for clients..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      <h1 style={{ color: "white" }}>User Management</h1>
+      {loading && <p>Carregando...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className="user-list">
+        {users.map((user) => (
+          <UserCard
+            key={user.uid}
+            user={user}
+            isActive={user.uid === selectedUserId}
+            onViewPortfolio={fetchPortfolio}
           />
-          <button className="btn btn-primary mt-2" onClick={handleSearch}>
-            Search
-          </button>
-        </div>
-        {selectedUser ? (
-          <div className="dashboard">
-            <h3>Dashboard - {selectedUser.name}</h3>
-            <p>Total Invested: ${selectedUser.totalInvested}</p>
-            <div className="chart-container my-4">
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={selectedUser.portfolio}
-                    dataKey="value"
-                    nameKey="name"
-                    outerRadius={100}
-                    fill="#8884d8"
-                  >
-                    {selectedUser.portfolio.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        ) : (
-          <p className="text-muted">
-            No user selected. Please perform a search.
-          </p>
-        )}
+        ))}
       </div>
+
+      {selectedPortfolio && <PortfolioDetails portfolio={selectedPortfolio} />}
     </div>
   );
 }
+
+const UserCard = ({ user, isActive, onViewPortfolio }) => {
+  const { email, uid } = user;
+
+  return (
+    <div
+      className={`user-card ${isActive ? "active" : ""}`}
+      onClick={() => onViewPortfolio(uid)}
+    >
+      <p>{email}</p>
+      <button>View Portfolio</button>
+    </div>
+  );
+};
+
+const PortfolioDetails = ({ portfolio }) => {
+  const { balance, purchased_pies } = portfolio;
+
+  return (
+    <div className="portfolio-details">
+      <div className="portfolio-balance-card">
+        <h3>Balance</h3>
+        <p>${balance.toFixed(2)}</p>
+      </div>
+      <h3>Purchased Investments:</h3>
+      {purchased_pies.length === 0 ? (
+        <p>No investments purchased.</p>
+      ) : (
+        <div className="pie-cards">
+          {purchased_pies.map((pie) => (
+            <PieCard key={pie.id} pie={pie} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const PieCard = ({ pie }) => {
+  const { name, description, invested, objective, purchase_date } = pie;
+
+  return (
+    <div className="pie-card">
+      <h4>{name}</h4>
+      <p>
+        <strong>Description:</strong> {description}
+      </p>
+      <p>
+        <strong>Invested:</strong> ${invested}
+      </p>
+      <p>
+        <strong>Objective:</strong> {objective}
+      </p>
+      <p>
+        <strong>Purchase Date:</strong>{" "}
+        {new Date(purchase_date).toLocaleDateString()}
+      </p>
+    </div>
+  );
+};
 
 export default Wallet;

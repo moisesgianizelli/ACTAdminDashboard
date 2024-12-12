@@ -59,3 +59,17 @@ body {
 .login-btn:hover {
   background-color: #0056b3;
 }
+
+.toggle-register {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.toggle-link {
+  color: #007bff;
+  cursor: pointer;
+}
+
+.toggle-link:hover {
+  text-decoration: underline;
+}

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 import "./Sidebar.css";
+import Nav from "./Nav";
 
-function Sidebar({ onSelect, activeItem: propActiveItem, userType }) {
+function Sidebar({ onSelect, activeItem: propActiveItem, userType, Toggle }) {
   const [activeItem, setActiveItem] = useState(propActiveItem || "Home");
 
   const handleSelect = (item) => {
@@ -16,12 +17,12 @@ function Sidebar({ onSelect, activeItem: propActiveItem, userType }) {
       className="bg-white sidebar d-flex flex-column p-2"
       style={{ height: "100vh" }}
     >
+      <div className="d-flex justify-content-between align-items-center">
+        {/* <Nav Toggle={Toggle} /> */}
+      </div>
       <div className="m-2">
-        <i className="bi bi-bootstrap-fill me-3 fs-4"></i>
         <span className="brand-name fs-4">ACT</span>
       </div>
-      <hr className="text-dark" />
-
       <div className="list-group list-group-flush flex-grow-1">
         {/* Common Links for All Users */}
         <Link
@@ -41,7 +42,7 @@ function Sidebar({ onSelect, activeItem: propActiveItem, userType }) {
         </Link>
 
         {/* Manager-Only Links */}
-        {userType === "manager" && (
+        {userType && (
           <>
             <Link
               to="/wallet"
@@ -77,7 +78,7 @@ function Sidebar({ onSelect, activeItem: propActiveItem, userType }) {
         )}
 
         {/* User-Only Link */}
-        {userType === "user" && (
+        {!userType && (
           <Link
             to="/user-wallet"
             onClick={() => handleSelect("User Wallet")}

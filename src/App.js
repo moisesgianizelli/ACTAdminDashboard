@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,6 +17,8 @@ import AI from "./components/AI/AI";
 import FAQ from "./components/FAQ/FAQ";
 import Settings from "./components/Settings/Settings";
 import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import { loginUser, getUserProfile } from "./utils/api";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,12 +26,14 @@ function App() {
   const [toggle, setToggle] = useState(true);
   const [selectedOption, setSelectedOption] = useState("Home");
 
-  const handleLogin = (type) => {
+  const handleLogin = async (user) => {
     setIsLoggedIn(true);
-    setUserType(type);
+    console.log(user);
+    setUserType(user.is_manager);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("authToken");
     setIsLoggedIn(false);
     setUserType(null);
   };
@@ -38,9 +42,26 @@ function App() {
     setToggle(!toggle);
   };
 
+  useEffect(() => {
+    let token = localStorage.getItem("authToken");
+    if (token) {
+      let user = getUserProfile(token).then((user) => {
+        setIsLoggedIn(true);
+        setUserType(user.is_manager);
+        console.log(user);
+      });
+    }
+  }, []);
+
   return (
     <Router>
-      <div className="container-fluid bg-secondary min-vh-100">
+      <div
+        className="container-fluid min-vh-100"
+        style={{
+          background: "linear-gradient(to right, #0d3b66, #1e5f74)",
+          minHeight: "100vh",
+        }}
+      >
         <div className="row">
           {isLoggedIn ? (
             <>
@@ -61,7 +82,7 @@ function App() {
                   <Route
                     path="/wallet"
                     element={
-                      userType === "manager" ? (
+                      userType ? (
                         <Wallet Toggle={Toggle} />
                       ) : (
                         <Navigate to="/" />
@@ -71,7 +92,7 @@ function App() {
                   <Route
                     path="/transactions"
                     element={
-                      userType === "manager" ? (
+                      userType ? (
                         <Transactions Toggle={Toggle} />
                       ) : (
                         <Navigate to="/" />
@@ -79,9 +100,9 @@ function App() {
                     }
                   />
                   <Route
-                    path="/user-wallet" // Nova rota para o UserWallet
+                    path="/user-wallet"
                     element={
-                      userType === "user" ? ( // Verifica se o tipo de usuário é "user"
+                      !userType ? (
                         <UserWallet Toggle={Toggle} />
                       ) : (
                         <Navigate to="/" />
@@ -106,9 +127,10 @@ function App() {
             <Routes>
               <Route
                 path="/login"
-                element={<Login handleLogin={(type) => handleLogin(type)} />}
+                element={<Login handleLogin={handleLogin} />}
               />
-              <Route path="*" element={<Navigate to="/login" />} />
+              <Route path="/register" element={<Register />} />
+              {/* <Route path="*" element={<Navigate to="/login" />} /> */}
             </Routes>
           )}
         </div>

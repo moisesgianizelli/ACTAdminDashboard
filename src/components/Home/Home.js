@@ -8,7 +8,7 @@ const Home = ({ Toggle }) => {
       <Nav Toggle={Toggle} />
       <div className="container-fluid">
         <header className="mt-4 text-center">
-          <h1>Welcome to ACT App</h1>
+          <h1 style={{ color: "white" }}>Welcome to ACT App</h1>
           <h5>Your one-stop solution for managing investments.</h5>
           <a href="#" className="btn btn-primary btn-lg">
             Get Started
