@@ -1,45 +1,15 @@
-Veja o que foi feito em userWallet
+Corrigir o cadastro de manager
 
-Para visuzalizar todos os usuarios entra como admin e faz GET em 
-http://127.0.0.1:5000/api/users/admin/all
+User side:
+- arrumar homepage
+- vender stocks
+- arrumar stocks no backend
+- implementar AI assist
+- arrumar settings e FAQ
 
-{
-	"count": 15,
-	"users": [
-		{
-			"created_at": 1733073237221,
-			"disabled": false,
-			"display_name": null,
-			"email": "example@example.com",
-			"email_verified": false,
-			"profile_data": {
-				"created_at": "Sun, 01 Dec 2024 17:13:58 GMT",
-				"display_name": "example",
-				"email": "example@example.com",
-				"role": "user",
-				"walletBalance": 1000.0
-			},
-			"uid": "xof7iaUwj4cRe3hszWs5vnF4qMb2"
-		}
-	]
-}
+Manager side:
+- transaction screen - ser igual ao portfolio + download do report
+- remover notification?
 
-Cada user em users tem que ter um card. Qnd clica no card, pega o campo uid/
-
-Com o uid, faz requisicao em http://127.0.0.1:5000/api/clients/{uid}/portfolio que retornara algo parecido com isso:
-{
-	"data": {
-		"balance": 950,
-		"purchased_pies": [
-			{
-				"description": "Aggressive investment",
-				"id": 1,
-				"invested": 50,
-				"name": "High Risk",
-				"objective": "High Risk",
-				"purchase_date": "2024-12-11T00:35:42.142149"
-			}
-		]
-	},
-	"status": "success"
-}
+se sobrar tempo:
+- user premium (ai)

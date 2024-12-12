@@ -3,8 +3,10 @@ import PieCard from "./PieCard";
 import Nav from "../../Nav";
 import PurchasedPiesList from "./PurchasedPiesList";
 import { getUserWallet, getPiesApi, buyPieApi } from "../../utils/api";
+import { useNotifications } from "../../components/NotificationContext";
 
 function UserWallet({ Toggle }) {
+  const { addNotification } = useNotifications();
   const [balance, setBalance] = useState(0);
   const [techStocks, setTechStocks] = useState([]);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
@@ -53,28 +55,11 @@ function UserWallet({ Toggle }) {
     // setBalance(balance - amount);
     if (type === "stock") {
       buyPie(asset.id, amount);
-
-      // useEffect(() => {
-      //   buyPie(asset.id, amount);
-      // }, []);
-      // if (purchasedStocks.length < 10) {
-      //   const existingStock = purchasedStocks.find((s) => s.id === asset.id);
-
-      //   if (existingStock) {
-      //     setPurchasedStocks(
-      //       purchasedStocks.map((s) =>
-      //         s.id === asset.id ? { ...s, invested: s.invested + amount } : s
-      //       )
-      //     );
-      //   } else {
-      //     setPurchasedStocks([
-      //       ...purchasedStocks,
-      //       { ...asset, invested: amount },
-      //     ]);
-      //   }
-      // } else {
-      //   alert("You can only purchase up to 10 tech stocks.");
-      // }
+      addNotification({
+        id: Date.now(),
+        message: `You bought ${amount} shares of ${asset.name} for €${amount}.`,
+        type: "stock",
+      });
     } else if (type === "crypto") {
       if (purchasedCrypto.length < 3) {
         const existingCrypto = purchasedCrypto.find((c) => c.id === asset.id);
@@ -91,6 +76,11 @@ function UserWallet({ Toggle }) {
             { ...asset, invested: amount },
           ]);
         }
+        addNotification({
+          id: Date.now(),
+          message: `You bought ${amount} units of ${asset.name}.`,
+          type: "crypto",
+        });
       } else {
         alert("You can only purchase up to 3 crypto assets.");
       }
@@ -117,7 +107,7 @@ function UserWallet({ Toggle }) {
     <div className="px-3">
       <Nav Toggle={Toggle} />
       <div className="container-fluid">
-        <h2 className="mt-4">My Wallet</h2>
+        <h2 style={{ color: "white" }}>My Wallet</h2>
         <div className="row">
           <div className="col-12 mb-4">
             <div className="p-3 bg-white shadow-sm rounded">

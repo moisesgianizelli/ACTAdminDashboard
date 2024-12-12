@@ -7,6 +7,9 @@ const Settings = ({ Toggle }) => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [email, setEmail] = useState("user@example.com");
+  const [password, setPassword] = useState("");
+  const [premium, setPremium] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   const handleNotificationChange = () => {
     setNotificationsEnabled(!notificationsEnabled);
@@ -20,6 +23,27 @@ const Settings = ({ Toggle }) => {
     setEmail(e.target.value);
   };
 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleUpgradeToPremium = () => {
+    setPremium(true);
+    alert("Congratulations! Your account has been upgraded to Premium.");
+  };
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePhoto(URL.createObjectURL(file));
+      alert("Profile photo updated successfully!");
+    }
+  };
+
+  const handleSaveChanges = () => {
+    alert("Your changes have been saved successfully!");
+  };
+
   return (
     <div className="px-3">
       <Nav Toggle={Toggle} />
@@ -27,6 +51,30 @@ const Settings = ({ Toggle }) => {
         <h2 className="text-center mt-4">Settings</h2>
         <hr />
 
+        {/* Profile Photo */}
+        <div className="card mb-4">
+          <div className="card-header">Profile Photo</div>
+          <div className="card-body text-center">
+            {profilePhoto ? (
+              <img
+                src={profilePhoto}
+                alt="Profile"
+                className="rounded-circle mb-3"
+                style={{ width: "100px", height: "100px" }}
+              />
+            ) : (
+              <p>No profile photo uploaded.</p>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={handlePhotoUpload}
+            />
+          </div>
+        </div>
+
+        {/* Email Address */}
         <div className="card mb-4">
           <div className="card-header">Profile Settings</div>
           <div className="card-body">
@@ -42,9 +90,24 @@ const Settings = ({ Toggle }) => {
                 onChange={handleEmailChange}
               />
             </div>
+
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={handlePasswordChange}
+                placeholder="Enter new password"
+              />
+            </div>
           </div>
         </div>
 
+        {/* Notification Settings */}
         <div className="card mb-4">
           <div className="card-header">Notification Settings</div>
           <div className="card-body">
@@ -63,6 +126,7 @@ const Settings = ({ Toggle }) => {
           </div>
         </div>
 
+        {/* Appearance */}
         <div className="card mb-4">
           <div className="card-header">Appearance</div>
           <div className="card-body">
@@ -81,8 +145,28 @@ const Settings = ({ Toggle }) => {
           </div>
         </div>
 
+        {/* Premium Account */}
+        <div className="card mb-4">
+          <div className="card-header">Account Upgrade</div>
+          <div className="card-body text-center">
+            {premium ? (
+              <p className="text-success">You are a Premium user!</p>
+            ) : (
+              <button
+                className="btn btn-warning"
+                onClick={handleUpgradeToPremium}
+              >
+                Upgrade to Premium
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Save Changes Button */}
         <div className="text-center mb-4">
-          <button className="btn btn-primary">Save Changes</button>
+          <button className="btn btn-primary" onClick={handleSaveChanges}>
+            Save Changes
+          </button>
         </div>
       </div>
     </div>

@@ -2,49 +2,50 @@ import React from "react";
 import Nav from "../../Nav";
 import "./HomeStyle/Home.css";
 
-const Home = ({ Toggle }) => {
+const HomePage = ({ user, Toggle }) => {
   return (
-    <div className="px-3">
-      <Nav Toggle={Toggle} />
-      <div className="container-fluid">
-        <header className="mt-4 text-center">
-          <h1 style={{ color: "white" }}>Welcome to ACT App</h1>
-          <h5>Your one-stop solution for managing investments.</h5>
-          <a href="#" className="btn btn-primary btn-lg">
-            Get Started
-          </a>
-        </header>
-        <hr />
+    <div className="home-page">
+      <div className="welcome-section">
+        <div className="profile-container">
+          <img
+            src={user?.profilePicture || "https://via.placeholder.com/150"}
+            alt="Profile"
+            className="profile-picture"
+          />
+        </div>
+        <div className="welcome-message">
+          <h1>Welcome, {user?.name || "User"}!</h1>
+          <p>
+            We're thrilled to have you here. Explore the features, track your
+            progress, and customize your experience.
+          </p>
+        </div>
+      </div>
 
-        <section className="features mt-5">
-          <h2 className="text-center mb-4">Features</h2>
-          <div className="row g-3">
-            <div className="col-md-4">
-              <div className="feature-card text-center">
-                <i className="bi bi-graph-up fs-2"></i>
-                <h3>Investment Tracking</h3>
-                <p>Monitor your investments in real-time.</p>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="feature-card text-center">
-                <i className="bi bi-basket fs-2"></i>
-                <h3>Diverse Portfolio</h3>
-                <p>Manage stocks, bonds, and cryptocurrencies.</p>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="feature-card text-center">
-                <i className="bi bi-chat-dots fs-2"></i>
-                <h3>AI Assistance</h3>
-                <p>Get insights and advice on your investments.</p>
-              </div>
-            </div>
+      <div className="info-section">
+        <div className="info-card">
+          <h3>Your Role</h3>
+          <p>{user?.role || "Not specified"}</p>
+        </div>
+        <div className="info-card">
+          <h3>Account Created On</h3>
+          <p>{user?.createdAt || "N/A"}</p>
+        </div>
+        <div className="info-card">
+          <h3>Quick Actions</h3>
+          <div className="actions">
+            <button onClick={() => alert("Navigate to Profile")}>
+              Profile
+            </button>
+            <button onClick={() => alert("Navigate to Settings")}>
+              Settings
+            </button>
+            <button onClick={() => alert("Log out")}>Logout</button>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default HomePage;

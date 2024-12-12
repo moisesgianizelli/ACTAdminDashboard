@@ -97,14 +97,15 @@ function Wallet({ Toggle }) {
 }
 
 const UserCard = ({ user, isActive, onViewPortfolio }) => {
-  const { email, uid } = user;
+  const displayName = user.profile_data?.display_name || user.email; // Usa o display_name se existir, caso contrário, usa o email
+  const { uid } = user;
 
   return (
     <div
       className={`user-card ${isActive ? "active" : ""}`}
       onClick={() => onViewPortfolio(uid)}
     >
-      <p>{email}</p>
+      <p>{displayName}</p>
       <button>View Portfolio</button>
     </div>
   );

@@ -1,6 +1,6 @@
-/* Login.css */
+/* Register.css */
 
-.login-container {
+.register-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,7 @@
   background-color: #f4f7fc;
 }
 
-.login-card {
+.register-card {
   background-color: white;
   padding: 40px;
   border-radius: 8px;
@@ -24,10 +24,21 @@ h2 {
   color: #333;
 }
 
-.error {
-  color: red;
-  font-size: 0.9rem;
+.alert {
+  padding: 12px;
   margin-bottom: 15px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
 .form-group {
@@ -42,7 +53,8 @@ label {
   color: #555;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
@@ -53,7 +65,8 @@ input {
   transition: border-color 0.3s ease;
 }
 
-input:focus {
+input:focus,
+select:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -70,25 +83,15 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:disabled {
-  background-color: #a7c5f2;
-  cursor: not-allowed;
-}
-
-button:hover:not(:disabled) {
+button:hover {
   background-color: #0056b3;
 }
 
-.signup-option {
-  margin-top: 20px;
+.register-button {
+  background-color: #007bff;
 }
 
-.signup-link {
-  color: #007bff;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.signup-link:hover {
-  text-decoration: underline;
+.register-button:disabled {
+  background-color: #a7c5f2;
+  cursor: not-allowed;
 }

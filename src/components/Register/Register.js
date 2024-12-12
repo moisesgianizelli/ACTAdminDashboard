@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../../utils/api";
+import { useNavigate } from "react-router-dom";
+import "./Register.css"; // Adicione o estilo modernizado no arquivo CSS
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const Register = () => {
   });
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,66 +26,66 @@ const Register = () => {
     try {
       const response = await registerUser(formData);
       setSuccess("User registered successfully!");
+      setTimeout(() => {
+        navigate("/login"); // Redireciona para a página de login após o sucesso
+      }, 1500);
     } catch (err) {
       setError(err.message || "Something went wrong");
     }
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Register</h2>
-      {success && <div className="alert alert-success">{success}</div>}
-      {error && <div className="alert alert-danger">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label>Role</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="form-control"
-          >
-            <option value="user">User</option>
-            <option value="manager">Manager</option>
-          </select>
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Register
-        </button>
-      </form>
+    <div className="register-container">
+      <div className="register-card">
+        <h2>Register</h2>
+        {success && <div className="alert success">{success}</div>}
+        {error && <div className="alert error">{error}</div>}
+        <form onSubmit={handleSubmit} className="register-form">
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Enter your name"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="role">Role</label>
+            <select name="role" value={formData.role} onChange={handleChange}>
+              <option value="user">User</option>
+              <option value="manager">Manager</option>
+            </select>
+          </div>
+          <button type="submit" className="register-button">
+            Register
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

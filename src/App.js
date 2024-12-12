@@ -18,7 +18,9 @@ import FAQ from "./components/FAQ/FAQ";
 import Settings from "./components/Settings/Settings";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+import { NotificationProvider } from "./components/NotificationContext";
 import { loginUser, getUserProfile } from "./utils/api";
+import Logout from "./components/Logout/Logout";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,88 +56,91 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div
-        className="container-fluid min-vh-100"
-        style={{
-          background: "linear-gradient(to right, #0d3b66, #1e5f74)",
-          minHeight: "100vh",
-        }}
-      >
-        <div className="row">
-          {isLoggedIn ? (
-            <>
-              {toggle && (
-                <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
-                  <Sidebar
-                    onSelect={setSelectedOption}
-                    activeItem={selectedOption}
-                    Toggle={Toggle}
-                    handleLogout={handleLogout}
-                    userType={userType}
-                  />
+    <NotificationProvider>
+      <Router>
+        <div
+          className="container-fluid min-vh-100"
+          style={{
+            background: "linear-gradient(to right, #0d3b66, #1e5f74)",
+            minHeight: "100vh",
+          }}
+        >
+          <div className="row">
+            {isLoggedIn ? (
+              <>
+                {toggle && (
+                  <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
+                    <Sidebar
+                      onSelect={setSelectedOption}
+                      activeItem={selectedOption}
+                      Toggle={Toggle}
+                      handleLogout={handleLogout}
+                      userType={userType}
+                    />
+                  </div>
+                )}
+                <div className={`col ${toggle ? "offset-md-2" : ""}`}>
+                  <Routes>
+                    <Route path="/" element={<Home Toggle={Toggle} />} />
+                    <Route
+                      path="/wallet"
+                      element={
+                        userType ? (
+                          <Wallet Toggle={Toggle} />
+                        ) : (
+                          <Navigate to="/" />
+                        )
+                      }
+                    />
+                    <Route
+                      path="/transactions"
+                      element={
+                        userType ? (
+                          <Transactions Toggle={Toggle} />
+                        ) : (
+                          <Navigate to="/" />
+                        )
+                      }
+                    />
+                    <Route
+                      path="/user-wallet"
+                      element={
+                        !userType ? (
+                          <UserWallet Toggle={Toggle} />
+                        ) : (
+                          <Navigate to="/" />
+                        )
+                      }
+                    />
+                    <Route
+                      path="/notifications"
+                      element={<Notifications Toggle={Toggle} />}
+                    />
+                    <Route path="/ai-assist" element={<AI Toggle={Toggle} />} />
+                    <Route path="/faq" element={<FAQ Toggle={Toggle} />} />
+                    <Route
+                      path="/settings"
+                      element={<Settings Toggle={Toggle} />}
+                    />
+                    <Route path="/logout" element={<Logout />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                  </Routes>
                 </div>
-              )}
-              <div className={`col ${toggle ? "offset-md-2" : ""}`}>
-                <Routes>
-                  <Route path="/" element={<Home Toggle={Toggle} />} />
-                  <Route
-                    path="/wallet"
-                    element={
-                      userType ? (
-                        <Wallet Toggle={Toggle} />
-                      ) : (
-                        <Navigate to="/" />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/transactions"
-                    element={
-                      userType ? (
-                        <Transactions Toggle={Toggle} />
-                      ) : (
-                        <Navigate to="/" />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/user-wallet"
-                    element={
-                      !userType ? (
-                        <UserWallet Toggle={Toggle} />
-                      ) : (
-                        <Navigate to="/" />
-                      )
-                    }
-                  />
-                  <Route
-                    path="/notifications"
-                    element={<Notifications Toggle={Toggle} />}
-                  />
-                  <Route path="/ai-assist" element={<AI Toggle={Toggle} />} />
-                  <Route path="/faq" element={<FAQ Toggle={Toggle} />} />
-                  <Route
-                    path="/settings"
-                    element={<Settings Toggle={Toggle} />}
-                  />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-              </div>
-            </>
-          ) : (
-            <Routes>
-              <Route
-                path="/login"
-                element={<Login handleLogin={handleLogin} />}
-              />
-              <Route path="/register" element={<Register />} />
-              {/* <Route path="*" element={<Navigate to="/login" />} /> */}
-            </Routes>
-          )}
+              </>
+            ) : (
+              <Routes>
+                <Route
+                  path="/login"
+                  element={<Login handleLogin={handleLogin} />}
+                />
+                <Route path="/register" element={<Register />} />
+                {/* <Route path="*" element={<Navigate to="/login" />} /> */}
+              </Routes>
+            )}
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </NotificationProvider>
   );
 }
 
