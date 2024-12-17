@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 import "./Sidebar.css";
-import Nav from "./Nav";
 
 function Sidebar({ onSelect, activeItem: propActiveItem, userType, Toggle }) {
   const [activeItem, setActiveItem] = useState(propActiveItem || "Home");
@@ -79,39 +78,42 @@ function Sidebar({ onSelect, activeItem: propActiveItem, userType, Toggle }) {
 
         {/* User-Only Link */}
         {!userType && (
-          <Link
-            to="/user-wallet"
-            onClick={() => handleSelect("User Wallet")}
-            className={`list-group-item py-2 ${
-              activeItem === "User Wallet" ? "active" : ""
-            }`}
-            style={{
-              cursor: "pointer",
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
-            <i className="bi bi-wallet fs-5 me-2"></i>
-            <span>User Wallet</span>
-          </Link>
+          <>
+            <Link
+              to="/user-wallet"
+              onClick={() => handleSelect("User Wallet")}
+              className={`list-group-item py-2 ${
+                activeItem === "User Wallet" ? "active" : ""
+              }`}
+              style={{
+                cursor: "pointer",
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <i className="bi bi-wallet fs-5 me-2"></i>
+              <span>User Wallet</span>
+            </Link>
+            <Link
+              to="/notifications"
+              onClick={() => handleSelect("Notifications")}
+              className={`list-group-item py-2 ${
+                activeItem === "Notifications" ? "active" : ""
+              }`}
+              style={{
+                cursor: "pointer",
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <i className="bi bi-bell fs-5 me-2"></i>
+              <span>Notifications</span>
+            </Link>
+          </>
         )}
 
         {/* Common Links for All Users */}
-        <Link
-          to="/notifications"
-          onClick={() => handleSelect("Notifications")}
-          className={`list-group-item py-2 ${
-            activeItem === "Notifications" ? "active" : ""
-          }`}
-          style={{
-            cursor: "pointer",
-            textDecoration: "none",
-            color: "inherit",
-          }}
-        >
-          <i className="bi bi-bell fs-5 me-2"></i>
-          <span>Notifications</span>
-        </Link>
+
         <Link
           to="/ai-assist"
           onClick={() => handleSelect("AI Assist")}

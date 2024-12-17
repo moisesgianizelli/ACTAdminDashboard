@@ -52,7 +52,7 @@ const Settings = ({ Toggle }) => {
         <hr />
 
         {/* Profile Photo */}
-        <div className="card mb-4">
+        {/* <div className="card mb-4">
           <div className="card-header">Profile Photo</div>
           <div className="card-body text-center">
             {profilePhoto ? (
@@ -72,7 +72,7 @@ const Settings = ({ Toggle }) => {
               onChange={handlePhotoUpload}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* Email Address */}
         <div className="card mb-4">

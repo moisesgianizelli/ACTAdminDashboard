@@ -1,8 +1,97 @@
-.card {
-  margin-bottom: 1rem;
+General Layout .container-fluid {
+  background-color: #f4f9fd;
+  padding: 20px;
 }
 
-.card-header {
-  background-color: #007bff;
-  color: white;
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1d3c6a;
+  margin-bottom: 20px;
+}
+
+hr {
+  border-top: 1px solid #0d3b66;
+  width: 50%;
+  margin: 0 auto 20px auto;
+}
+
+/* Accordion Styles */
+.accordion .card {
+  border: 1px solid #e1e8f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.accordion .card-header {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e1e8f0;
+}
+
+.accordion .card-header h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.accordion .btn-link {
+  color: #1d3c6a;
+  font-size: 1.1rem;
+  text-decoration: none;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.accordion .btn-link:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.accordion .btn-link.collapsed {
+  color: #007bff;
+}
+
+.accordion .card-body {
+  background-color: #f9f9f9;
+  padding: 15px;
+  font-size: 1rem;
+  color: #333;
+  border-top: 1px solid #e1e8f0;
+}
+
+.accordion .collapse.show {
+  transition: max-height 0.4s ease-in-out;
+  max-height: 2000px; /* Makes sure the animation works smoothly */
+}
+
+/* Add a subtle hover effect for accordion items */
+.accordion .btn-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Button to toggle accordion */
+.accordion button {
+  transition: all 0.3s ease;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .accordion .card-header {
+    padding: 10px;
+  }
+
+  .accordion .btn-link {
+    font-size: 1rem;
+  }
 }

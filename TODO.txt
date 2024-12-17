@@ -1,15 +1,9 @@
 Corrigir o cadastro de manager
 
 User side:
-- arrumar homepage
 - vender stocks
 - arrumar stocks no backend
 - implementar AI assist
-- arrumar settings e FAQ
-
-Manager side:
-- transaction screen - ser igual ao portfolio + download do report
-- remover notification?
 
 se sobrar tempo:
 - user premium (ai)

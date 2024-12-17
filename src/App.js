@@ -114,7 +114,13 @@ function App() {
                     />
                     <Route
                       path="/notifications"
-                      element={<Notifications Toggle={Toggle} />}
+                      element={
+                        !userType ? (
+                          <Notifications Toggle={Toggle} />
+                        ) : (
+                          <Navigate to="/" />
+                        )
+                      }
                     />
                     <Route path="/ai-assist" element={<AI Toggle={Toggle} />} />
                     <Route path="/faq" element={<FAQ Toggle={Toggle} />} />
