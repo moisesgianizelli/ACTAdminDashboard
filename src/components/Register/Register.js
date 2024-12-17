@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
-import "./Register.css"; // Adicione o estilo modernizado no arquivo CSS
+import "./Register.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +27,7 @@ const Register = () => {
       const response = await registerUser(formData);
       setSuccess("User registered successfully!");
       setTimeout(() => {
-        navigate("/login"); // Redireciona para a página de login após o sucesso
+        navigate("/login");
       }, 1500);
     } catch (err) {
       setError(err.message || "Something went wrong");

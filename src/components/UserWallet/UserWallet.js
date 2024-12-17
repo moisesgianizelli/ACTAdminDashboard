@@ -107,7 +107,7 @@ function UserWallet({ Toggle }) {
     <div className="px-3">
       <Nav Toggle={Toggle} />
       <div className="container-fluid">
-        <h2 style={{ color: "white" }}>My Wallet</h2>
+        <h2>My Wallet</h2>
         <div className="row">
           <div className="col-12 mb-4">
             <div className="p-3 bg-white shadow-sm rounded">

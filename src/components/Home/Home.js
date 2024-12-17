@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import { useNavigate } from "react-router-dom";
 import "./HomeStyle/Home.css";
 
 const HomePage = ({ user }) => {
@@ -7,15 +7,13 @@ const HomePage = ({ user }) => {
     user?.profilePicture || "https://via.placeholder.com/150"
   );
 
-  const navigate = useNavigate(); // Define navigate
-
-  // Função para lidar com o upload da imagem
+  const navigate = useNavigate();
   const handleProfilePictureChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setProfilePicture(reader.result); // Atualiza a imagem exibida
+        setProfilePicture(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -40,7 +38,7 @@ const HomePage = ({ user }) => {
           </div>
         </div>
         <div className="welcome-message">
-          <h1>Welcome, {user?.name || "User"}!</h1>
+          <h1>Welcome!</h1>
           <p>
             We're thrilled to have you here. Explore the features, track your
             progress, and customize your experience.
@@ -49,7 +47,6 @@ const HomePage = ({ user }) => {
       </div>
 
       <div className="info-section">
-        {/* Primeiro card como link para um blog */}
         <a
           href="https://example-blog.com"
           target="_blank"
@@ -62,8 +59,6 @@ const HomePage = ({ user }) => {
             journey.
           </p>
         </a>
-
-        {/* Segundo card com barra de progresso */}
         <div className="info-card">
           <h3>Your Financial Goal Progress</h3>
           <p>You're at 65% of your savings goal!</p>
@@ -71,8 +66,6 @@ const HomePage = ({ user }) => {
             <div className="progress-bar" style={{ width: "65%" }}></div>
           </div>
         </div>
-
-        {/* Terceiro card com navegação real */}
         <div className="info-card">
           <h3>Quick Actions</h3>
           <div className="actions">

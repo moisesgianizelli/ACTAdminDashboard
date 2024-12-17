@@ -16,10 +16,7 @@ const Logout = () => {
       <button className="btn btn-danger m-2" onClick={handleLogout}>
         Logout
       </button>
-      <button
-        className="btn btn-secondary m-2"
-        onClick={() => navigate(-1)} // Go back to the previous page
-      >
+      <button className="btn btn-secondary m-2" onClick={() => navigate(-1)}>
         Cancel
       </button>
     </div>

@@ -37,30 +37,32 @@ function AI({ Toggle }) {
   };
 
   return (
-    <div className="ai-assist-container">
+    <div className="px-3">
       <Nav Toggle={Toggle} />
-      <h1>AI-Assist: Test API Integration</h1>
-      <p>Click a button to analyze a symbol:</p>
+      <div className="ai-assist-container">
+        <h1>AI-Assist: Test API Integration</h1>
+        <p>Click a button to analyze a symbol:</p>
 
-      <div className="button-container">
-        <button onClick={() => analyze("AAPL")} disabled={isLoading}>
-          Analyze Apple (AAPL)
-        </button>
-        <button onClick={() => analyze("GOOGL")} disabled={isLoading}>
-          Analyze Google (GOOGL)
-        </button>
-        <button onClick={() => analyze("BTC")} disabled={isLoading}>
-          Analyze Bitcoin (BTC)
-        </button>
-        <button onClick={() => analyze("ETH")} disabled={isLoading}>
-          Analyze Ethereum (ETH)
-        </button>
-      </div>
+        <div className="button-container">
+          <button onClick={() => analyze("AAPL")} disabled={isLoading}>
+            Analyze Apple (AAPL)
+          </button>
+          <button onClick={() => analyze("GOOGL")} disabled={isLoading}>
+            Analyze Google (GOOGL)
+          </button>
+          <button onClick={() => analyze("BTC")} disabled={isLoading}>
+            Analyze Bitcoin (BTC)
+          </button>
+          <button onClick={() => analyze("ETH")} disabled={isLoading}>
+            Analyze Ethereum (ETH)
+          </button>
+        </div>
 
-      <hr />
+        <hr />
 
-      <div className="result-container">
-        <div id="result" dangerouslySetInnerHTML={{ __html: result }}></div>
+        <div className="result-container">
+          <div id="result" dangerouslySetInnerHTML={{ __html: result }}></div>
+        </div>
       </div>
     </div>
   );

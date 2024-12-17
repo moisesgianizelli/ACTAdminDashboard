@@ -1,7 +1,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const API_BASE_URL = "http://127.0.0.1:5000/api"; // Backend base URL
+const API_BASE_URL = "http://127.0.0.1:5000/api";
 
 /**
  * Registers a new user with the provided data.

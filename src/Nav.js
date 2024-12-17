@@ -8,7 +8,7 @@ function Nav({ Toggle }) {
       <i
         className="navbar-brand bi bi-justify-left fs-4 toggle-icon"
         onClick={Toggle}
-        style={{ color: "black" }} // Apply black color directly
+        style={{ color: "black" }}
       ></i>
       <button
         className="navbar-toggler d-lg-none"
@@ -19,7 +19,6 @@ function Nav({ Toggle }) {
         aria-label="Toggle navigation"
       >
         <i className="bi bi-justify" style={{ color: "black" }}></i>{" "}
-        {/* Apply black color to the toggle icon here */}
       </button>
     </nav>
   );

@@ -1,9 +1,7 @@
-Corrigir o cadastro de manager
+AI functionality 
+Sell stock
+Register a new admin
+Fix stocks name on the backend
 
-User side:
-- vender stocks
-- arrumar stocks no backend
-- implementar AI assist
-
-se sobrar tempo:
-- user premium (ai)
+link admins to accounts
+create a premium functionality (premium users has access to AI)

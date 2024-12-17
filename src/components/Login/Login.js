@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"; // Certifique-se de adicionar o estilo modernizado no arquivo CSS
+import "./Login.css";
 import { loginUser } from "../../utils/api";
 
 function Login({ handleLogin }) {

@@ -69,15 +69,15 @@ function App() {
             {isLoggedIn ? (
               <>
                 {toggle && (
-                  <div className="col-4 col-md-2 bg-white vh-100 position-fixed">
-                    <Sidebar
-                      onSelect={setSelectedOption}
-                      activeItem={selectedOption}
-                      Toggle={Toggle}
-                      handleLogout={handleLogout}
-                      userType={userType}
-                    />
-                  </div>
+                  //<div className="col-4 col-md-2 bg-white vh-100 position-fixed">
+                  <Sidebar
+                    onSelect={setSelectedOption}
+                    activeItem={selectedOption}
+                    Toggle={Toggle}
+                    handleLogout={handleLogout}
+                    userType={userType}
+                  />
+                  //</div>
                 )}
                 <div className={`col ${toggle ? "offset-md-2" : ""}`}>
                   <Routes>

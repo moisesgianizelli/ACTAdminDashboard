@@ -8,7 +8,7 @@ function Transaction({ Toggle }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); // Added for search functionality
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchUsers();
@@ -74,8 +74,6 @@ function Transaction({ Toggle }) {
       setLoading(false);
     }
   };
-
-  // Filter users based on search query
   const filteredUsers = users.filter(
     (user) =>
       user.profile_data?.display_name
@@ -117,11 +115,9 @@ function Transaction({ Toggle }) {
   };
 
   return (
-    <div className="transaction-container">
+    <div className="wallet-container">
       <Nav Toggle={Toggle} />
       <h1 style={{ color: "white" }}>Transaction History</h1>
-
-      {/* Search bar for users */}
       <div className="search-bar">
         <input
           type="text"
@@ -133,8 +129,6 @@ function Transaction({ Toggle }) {
 
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {/* User list filtered by search, only show if search query is not empty */}
       {searchQuery && (
         <div className="user-list">
           {filteredUsers.length > 0 ? (
@@ -151,12 +145,9 @@ function Transaction({ Toggle }) {
           )}
         </div>
       )}
-
-      {/* Show selected user's portfolio details */}
       {selectedPortfolio && (
         <>
           <TransactionPortfolioDetails portfolio={selectedPortfolio} />
-          {/* Download report button */}
           <button onClick={downloadReport}>Download Report</button>
         </>
       )}

@@ -50,31 +50,6 @@ const Settings = ({ Toggle }) => {
       <div className="container-fluid">
         <h2 className="text-center mt-4">Settings</h2>
         <hr />
-
-        {/* Profile Photo */}
-        {/* <div className="card mb-4">
-          <div className="card-header">Profile Photo</div>
-          <div className="card-body text-center">
-            {profilePhoto ? (
-              <img
-                src={profilePhoto}
-                alt="Profile"
-                className="rounded-circle mb-3"
-                style={{ width: "100px", height: "100px" }}
-              />
-            ) : (
-              <p>No profile photo uploaded.</p>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              className="form-control"
-              onChange={handlePhotoUpload}
-            />
-          </div>
-        </div> */}
-
-        {/* Email Address */}
         <div className="card mb-4">
           <div className="card-header">Profile Settings</div>
           <div className="card-body">
@@ -106,8 +81,6 @@ const Settings = ({ Toggle }) => {
             </div>
           </div>
         </div>
-
-        {/* Notification Settings */}
         <div className="card mb-4">
           <div className="card-header">Notification Settings</div>
           <div className="card-body">
@@ -125,8 +98,6 @@ const Settings = ({ Toggle }) => {
             </div>
           </div>
         </div>
-
-        {/* Appearance */}
         <div className="card mb-4">
           <div className="card-header">Appearance</div>
           <div className="card-body">
@@ -145,7 +116,6 @@ const Settings = ({ Toggle }) => {
           </div>
         </div>
 
-        {/* Premium Account */}
         <div className="card mb-4">
           <div className="card-header">Account Upgrade</div>
           <div className="card-body text-center">

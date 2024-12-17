@@ -136,7 +136,7 @@
   display: block;
   text-align: center;
 }
-/* Adiciona estilo para o link card */
+
 .link-card {
   text-decoration: none;
   color: inherit;
@@ -148,7 +148,6 @@
   text-decoration: underline;
 }
 
-/* Barra de progresso */
 .progress-bar-container {
   width: 100%;
   background-color: #e0e0e0;
